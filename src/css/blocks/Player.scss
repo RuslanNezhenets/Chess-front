@@ -1,0 +1,66 @@
+.board-player {
+    display: flex;
+    width: 100%;
+}
+
+.board-player-content {
+    display: flex;
+    width: 100%;
+    margin: 15px 0;
+    height: 50px
+}
+
+.board-player-img {
+    width: auto;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.board-player-info {
+    margin-left: 10px;
+    height: 100%;
+}
+
+.board-player-name {
+    font-size: 18px;
+    color: white;
+}
+
+.board-player-time {
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: end;
+    width: 200px;
+    height: 40px;
+    margin: auto;
+    border-radius: 3px;
+
+    &.white{
+        background-color: #fff;
+    }
+
+    &.black{
+        background-color: #21201d;
+    }
+}
+
+.board-player-time-value {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    text-align: end;
+    margin-right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+
+    &.white {
+        background-color: transparent;
+        color: #000;
+    }
+
+    &.black {
+        background-color: transparent;
+        color: gray;
+    }
+}

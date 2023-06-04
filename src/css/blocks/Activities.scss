@@ -1,0 +1,22 @@
+.activities {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.activities-button {
+  display: flex;
+  color: #c6c6c5;
+  background-color: #32312f;
+  border-radius: 5px;
+  width: 150px;
+  padding: 10px 20px;
+  justify-content: center;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #363533;
+    cursor: pointer;
+    color: white;
+  }
+}

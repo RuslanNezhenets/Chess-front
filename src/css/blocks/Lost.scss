@@ -1,0 +1,18 @@
+.lost {
+    display: flex;
+    width: 100%;
+}
+
+.lost-img {
+    margin-left: -10px;
+    height: 28px;
+
+    &:first-child{
+        margin-left: 0;
+    }
+
+    img {
+        width: auto;
+        height: 100%;
+    }
+}

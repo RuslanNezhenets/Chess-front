@@ -1,0 +1,21 @@
+@import "Lost.scss";
+@import "History.scss";
+@import "Activities.scss";
+
+#board-sidebar {
+    width: 40%;
+    height: 100%;
+}
+
+.board-sidebar-container{
+    background-color: #21201d;
+    height: calc(100% - 40px);
+    margin: 20px 40px;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+
+
+
+
+

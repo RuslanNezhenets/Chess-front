@@ -1,0 +1,40 @@
+.board {
+    width: calc(72px * 8);
+    height: calc(72px * 8);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        position: relative;
+        width: auto;
+        height: 100%;
+    }
+}
+
+
+.black {
+    background-color: #769656;
+}
+
+.white {
+    background-color: #eeeed2;
+}
+
+.selected {
+    background-color: brown;
+}
+
+.available {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: #22c022;
+}

@@ -1,0 +1,30 @@
+.history {
+  height: 85%;
+  overflow-y: scroll;
+  padding-left: 10px;
+}
+.history table {
+  margin: 0;
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: #2b2926;
+  --bs-table-border-color: transparent;
+}
+
+.history::-webkit-scrollbar {
+  width: 10px;
+  margin-left: -20px;
+}
+
+.history::-webkit-scrollbar-thumb {
+  background-color: #000;
+  border-radius: 5px;
+}
+
+.history-img {
+  height: 20px;
+  width: auto;
+  margin-top: -5px;
+  margin-left: -5px;
+}
+
+/*# sourceMappingURL=History.css.map */
