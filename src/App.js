@@ -1,12 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import './css/App.css'
 import BoardComponent from "./components/BoardComponent"
-import {fetchBoard, highlight, reset} from "./http/chessApi"
+import {highlight, reset} from "./http/chessApi"
 import Player from "./components/Player"
-import History from "./components/History";
-import {Colors} from "./models/Colors";
-import WinModal from "./components/modals/WinModal";
-import Activities from "./components/Activities";
+import History from "./components/History"
+import {Colors} from "./models/Colors"
+import WinModal from "./components/modals/WinModal"
+import Activities from "./components/Activities"
+import {Context} from "./index";
 
 function App() {
     const [board, setBoard] = useState({'cells': [], "first": true})
@@ -15,13 +16,21 @@ function App() {
     const [whiteTime, setWhiteTime] = useState(600)
     const timer = useRef(null)
 
+    const {socket} = useContext(Context)
+
     useEffect(() => {
+        socket.socket.on('board_update', (data) => {
+            setBoard(data)
+            setWhiteTime(data.time[0])
+            setBlackTime(data.time[1])
+
+            console.log("useEffect")
+            if (data.state === 2 || data.state === 3)
+                stopGame()
+        })
+
         highlight(null, 1).then(() => {
-            fetchBoard().then(data => {
-                setBoard(data)
-                setWhiteTime(data.time[0])
-                setBlackTime(data.time[1])
-            })
+            socket.socket.emit('board_update')
         })
     }, [])
 
@@ -34,7 +43,7 @@ function App() {
         setBlackTime(time_init)
         clearInterval(timer.current)
         setBoard({'cells': [], "first": true})
-        reset(time_init).then((data => setBoard(data)))
+        reset(time_init).then(() => socket.socket.emit('board_update'))
     }
 
     function startTimer() {
@@ -56,50 +65,47 @@ function App() {
     }
 
     function stopGame() {
-        fetchBoard().then(data => setBoard(data))
         setShowModal(true)
         clearInterval(timer.current)
     }
 
-    return (
-        <div className="app">
-            <WinModal
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                board={board}
-            />
-            <div id="board-main">
-                <div className="board-main-container">
-                    <Player
-                        figures={board.lost_white}
-                        active={board.active === "white" ? "black" : "white"}
-                        current={board.active}
-                        time={blackTime}
-                        stopGame={stopGame}
-                    />
-                    <BoardComponent
-                        board={board}
-                        setBoard={setBoard}
-                        currentPlayer={board.active}
-                        stopGame={stopGame}
-                    />
-                    <Player
-                        figures={board.lost_black}
-                        active={board.active === "white" ? "white" : "black"}
-                        current={board.active}
-                        time={whiteTime}
-                        stopGame={stopGame}
-                    />
-                </div>
-            </div>
-            <div id="board-sidebar">
-                <div className="board-sidebar-container">
-                    <History history={board.history}/>
-                    <Activities restart={restart}/>
-                </div>
+    return (<div className="app">
+        <WinModal
+            show={showModal}
+            onHide={() => setShowModal(false)}
+            board={board}
+        />
+        <div id="board-main">
+            <div className="board-main-container">
+                <Player
+                    figures={board.lost_white}
+                    active={board.active === "white" ? "black" : "white"}
+                    current={board.active}
+                    time={blackTime}
+                    stopGame={stopGame}
+                />
+                <BoardComponent
+                    board={board}
+                    setBoard={setBoard}
+                    currentPlayer={board.active}
+                    stopGame={stopGame}
+                />
+                <Player
+                    figures={board.lost_black}
+                    active={board.active === "white" ? "white" : "black"}
+                    current={board.active}
+                    time={whiteTime}
+                    stopGame={stopGame}
+                />
             </div>
         </div>
-    );
+        <div id="board-sidebar">
+            <div className="board-sidebar-container">
+                <History history={board.history}/>
+                <Activities restart={restart}/>
+            </div>
+        </div>
+    </div>);
 }
 
 export default App;

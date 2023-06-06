@@ -1,8 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React, {createContext} from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import SocketStore from "./store/SocketStore"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+export const Context = createContext(null)
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    <App/>
-);
+    <Context.Provider value={{
+        socket: new SocketStore()
+    }}>
+        <App/>
+    </Context.Provider>
+)
