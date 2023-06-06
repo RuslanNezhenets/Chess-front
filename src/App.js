@@ -24,7 +24,6 @@ function App() {
             setWhiteTime(data.time[0])
             setBlackTime(data.time[1])
 
-            console.log("useEffect")
             if (data.state === 2 || data.state === 3)
                 stopGame()
         })

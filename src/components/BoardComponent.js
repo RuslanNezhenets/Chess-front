@@ -35,6 +35,7 @@ const BoardComponent = ({board, setBoard, currentPlayer, stopGame}) => {
 
         function highlightCells() {
             if (selectedCell) highlight(selectedCell).then(() => updateBoard(true))
+            else highlight(selectedCell, 1).then(() => updateBoard(true))
         }
 
         function updateBoard(single = false) {
@@ -56,7 +57,9 @@ const BoardComponent = ({board, setBoard, currentPlayer, stopGame}) => {
                                 key={cell.id}
                                 cell={cell}
                                 click={click}
-                                selected={cell.x === selectedCell?.x && cell.y === selectedCell?.y}/>
+                                selected={cell.x === selectedCell?.x && cell.y === selectedCell?.y}
+                                history={board.history}
+                            />
                         )}
                     </React.Fragment>
                 )}
