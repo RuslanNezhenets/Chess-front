@@ -2,7 +2,7 @@ import React from 'react';
 
 const Activities = ({restart}) => {
     const handleRestart = () => {
-        restart(600)
+        restart(10)
     }
 
     return (

@@ -68,6 +68,30 @@ function App() {
         clearInterval(timer.current)
     }
 
+    function getPlayer(side, other = false) {
+        let active, time, figures;
+
+        if ((side === Colors.BLACK && !other) || (side === Colors.WHITE && other)) {
+            figures = board.lost_white;
+            active = board.active === "white" ? "black" : "white";
+            time = blackTime;
+        } else {
+            figures = board.lost_black;
+            active = board.active === "white" ? "white" : "black";
+            time = whiteTime;
+        }
+
+        return (
+            <Player
+                figures={figures}
+                active={active}
+                current={board.active}
+                time={time}
+                stopGame={stopGame}
+            />
+        );
+    }
+
     return (<div className="app">
         <WinModal
             show={showModal}
@@ -76,26 +100,14 @@ function App() {
         />
         <div id="board-main">
             <div className="board-main-container">
-                <Player
-                    figures={board.lost_white}
-                    active={board.active === "white" ? "black" : "white"}
-                    current={board.active}
-                    time={blackTime}
-                    stopGame={stopGame}
-                />
+                {getPlayer(board.side, true)}
                 <BoardComponent
                     board={board}
                     setBoard={setBoard}
                     currentPlayer={board.active}
                     stopGame={stopGame}
                 />
-                <Player
-                    figures={board.lost_black}
-                    active={board.active === "white" ? "white" : "black"}
-                    current={board.active}
-                    time={whiteTime}
-                    stopGame={stopGame}
-                />
+                {getPlayer(board.side)}
             </div>
         </div>
         <div id="board-sidebar">

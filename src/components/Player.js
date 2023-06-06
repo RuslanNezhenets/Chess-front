@@ -1,14 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import LostFigures from "./LostFigures";
 import avatar from "../assets/avatar.png"
 import {timeEnd} from "../http/chessApi";
+import {Context} from "../index";
 
 const Player = ({player, figures, current, active, time, stopGame}) => {
-
+    const {socket} = useContext(Context)
     useEffect(() => {
         if(time <= 0) {
             timeEnd(current).then(data => {
-                if(data[0]) stopGame()
+                if(data[0]) {
+                    socket.socket.emit('board_update')
+                    stopGame()
+                }
             })
         }
     }, [time])
